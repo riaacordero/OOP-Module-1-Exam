@@ -6,11 +6,13 @@ class User {
   bool isSeller = false;
 
   checkUser() {
+    // Set a mock account for login feature
     if (userName == "Riri" && _password == "123456") {
       welcome();
     } else {
       print("This account doesn't exist. Create an account first!");
-      createAccount(); // ABSTRACTION: Instead of placing the entire code for creating an account, I abstracted
+      // ABSTRACTION: Instead of placing the entire code for creating an account, I abstracted the instructions inside a single method.
+      createAccount(); 
     }
   }
 
@@ -22,6 +24,7 @@ class User {
 
     this.userName = userName;
     _password = password;
+    // ABSTRACTION: Instead of placing the entire code for the welcome page, I abstracted the instructions inside a single method.
     welcome();
   }
 
@@ -30,6 +33,8 @@ class User {
         this.userName +
         "! What do you want to do today?\n(1) User Information \n(2) Upgrade to seller's account");
     int choice = int.parse(stdin.readLineSync() ?? "");
+
+    // ABSTRACTION: Instead of placing the entire code inside the if-else statement, I abstracted the instructions inside a single method.
     if (choice == 1) {
       showUserInfo();
     } else if (choice == 2) {
@@ -58,6 +63,7 @@ class User {
   User(this.userName, this._password, this.isSeller);
 }
 
+// INHERITANCE: class Seller inherits the attributes of its parent class, User.
 class Seller extends User {
   Seller(String userName, String password, bool isSeller)
       : super(userName, password, true);
@@ -74,12 +80,14 @@ class Seller extends User {
     welcome();
   }
 
+  // POLYMORPHISM: Assigned class Seller its own method.
   downgradeSeller() {
     print("Your selling rights are revoked. You are now a Standard User!");
     User user = User(userName, _password, isSeller = false);
     user.showUserInfo();
   }
 
+  //POLYMORPHISM: Overriden welcome() method to replace the upgradeSeller() method to downgradeSeller() 
   @override
   welcome() {
     print("Welcome to your Lazapee Account, " +
